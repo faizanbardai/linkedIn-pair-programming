@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Card, Modal, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import UpdateProfile from '../API/UpdateProfile'
 
 export default class Profile extends Component {
     state = {
@@ -26,6 +27,19 @@ export default class Profile extends Component {
         this.setState({
             setShow: true
         })
+    }
+    handleSubmit = async () => {
+        let response = await UpdateProfile(
+            {
+                "name": this.state.firstname,
+                "surname": this.state.lastname,
+                "email": this.state.profile.email,
+                "bio": this.state.bio,
+                "title": this.state.title,
+                "area": this.state.location,
+                "image": ""
+            }, this.state.profile._id);
+        console.log(response);
     }
 
     render() {
@@ -100,7 +114,7 @@ export default class Profile extends Component {
                             <Button variant="secondary" onClick={() => this.handleClose()}>
                                 Close
                             </Button>
-                            <Button variant="primary" onClick={() => this.handleClose()}>
+                            <Button variant="primary" onClick={() => this.handleSubmit()}>
                                 Save Changes
                             </Button>
                         </Modal.Footer>
