@@ -7,11 +7,11 @@ import { Footer } from './Footer';
 export const MainComponent = () => {
     return (
         <section className="container-fluid">
-        <NavBar />
         
         <Router>
+        <NavBar />
             <Switch>
-                <Route path="/profiles/me" component={Profile}></Route>
+                <Route path="/profile/me" component={Profile}></Route>
             </Switch>
         </Router>
         <Footer />
