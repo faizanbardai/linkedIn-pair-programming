@@ -20,10 +20,9 @@ export default class Profile extends Component {
         setShow: false
     }
 
-
-    handleClose() {
+    handleClose() {        
         this.setState({
-            setShow: false
+            setShow: false 
         })
     }
     handleOpen = () => {
@@ -32,16 +31,16 @@ export default class Profile extends Component {
         })
     }
     handleSubmit = async () => {
-        let response = await UpdateProfile(
+        let { name, surname, email, bio, title, area } = this.state;
+        let profile = await UpdateProfile(
             {
-                "name": this.state.firstname,
-                "surname": this.state.lastname,
-                "email": this.state.profile.email,
-                "bio": this.state.bio,
-                "title": this.state.title,
-                "area": this.state.location
+                name, surname, email, bio, title, area
             }, this.state.profile._id);
-        console.log(response);
+        this.setState({
+            setShow: false,
+            profile: profile
+        })
+        console.log(profile);
     }
 
     render() {
@@ -53,7 +52,7 @@ export default class Profile extends Component {
                 {loading && <h1>Loading...</h1>}
 
                 {profile && <section>
-                    <Card className = "mb-2">
+                    <Card className="mb-2">
                         <div
                             className="profile-background-image profile-background-image--loading">
                         </div>
@@ -148,7 +147,7 @@ export default class Profile extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <Experience experiences = {experiences}/>
+                    <Experience experiences={experiences} />
                 </section>}
             </>
         )
@@ -187,5 +186,5 @@ export default class Profile extends Component {
             })
         }
     }
-    
+
 }
