@@ -11,19 +11,21 @@ export class NavBar extends Component {
     }
 
     filterUsers(e) {
-        this.setState({ searchKeyword: e.target.value })
-        if (this.state.searchKeyword && this.state.searchKeyword.length > 1) {
+        let searchKeyword = e.target.value;
+        this.setState({ searchKeyword: searchKeyword })
+        if (searchKeyword && searchKeyword.length > 2) {
+            let filteredUsers = this.state.allUsers
+                .filter(user => user.name.toLowerCase()
+                .includes(searchKeyword.toLowerCase())
+            )
             this.setState({
-                filteredUsers: this.state.allUsers
-                    .filter(user => user.name.toLowerCase()
-                        .includes(this.state.searchKeyword.toLowerCase())
-                    )
+                filteredUsers: filteredUsers
             })
+            if (filteredUsers && filteredUsers.length > 0) {
+                this.setState({
+                    user: filteredUsers[0].username
+                })
         }
-        if (this.state.filteredUsers && this.state.filteredUsers.length > 0) {
-            this.setState({
-                user: this.state.filteredUsers[0].username
-            })
         }
 
     }
