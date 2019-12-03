@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  margin: 0 0 70px ;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -12,10 +12,7 @@ code {
     monospace;
 }
 
-.navbar-nav > li {
-  min-width: 105px;
-  text-align: center;
-}
+
 
 .profile-background-image--loading {
   background: url(https://www.linkedin.com/sc/h/5qi38njir9vsm46ync2qjvrrs) 50%/cover;
@@ -36,6 +33,18 @@ code {
 
 .inline {
   display: inline!important;
+}
+
+.navbar-nav > li {
+  text-align: center;
+}
+
+.navbar-collapse > ul {
+  font-size: 0.9rem;
+}
+
+.nav-link {
+  padding: 0;
 }
 
 .t-12 {
