@@ -12,7 +12,41 @@ code {
     monospace;
 }
 
-.t-24 {
-  font-size: 2.4rem;
+.profile-background-image--loading {
+  background: url(https://www.linkedin.com/sc/h/5qi38njir9vsm46ync2qjvrrs) 50%/cover;
+}
+
+.profile-background-image {
+  position: relative;
+  width: 100%;
+  padding-bottom: 25%;
+}
+
+.card-body > img {
+  width: 152px;
+  height: 152px;
+  margin-top: -104px;
+  /* z-index: 1; */
+}
+
+.inline {
+  display: inline!important;
+}
+
+.t-12 {
+  font-size: 1.2rem;
   line-height: 1.33333;
+}
+
+.t-14 {
+  font-size: 1.4rem;
+  line-height: 1.33333;
+}
+
+.t-normal {
+  font-weight: 400;
+}
+
+.t-black {
+  color: rgba(0,0,0,.9);
 }
