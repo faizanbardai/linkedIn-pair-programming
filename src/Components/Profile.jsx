@@ -41,7 +41,11 @@ export default class Profile extends Component {
             setShow: false,
             profile: profile
         })
-        console.log(profile);
+    }
+    addNewExperience = (newExp) => {
+        this.setState({
+            experiences: this.state.experiences.concat(newExp)
+        })
     }
 
     render() {
@@ -148,7 +152,7 @@ export default class Profile extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <Experience experiences={experiences} />
+                    <Experience experiences={experiences} addNewExperience={this.addNewExperience} />
                 </section>}
             </>
         )

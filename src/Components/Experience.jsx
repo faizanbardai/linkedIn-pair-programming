@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { Card, Modal, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -30,16 +29,9 @@ export default class Experience extends Component {
     handleSubmit = async () => {
         let {role, company, startDate, endDate, description, area, image} = this.state
         let response = await AddExperience(
-            {
-                role,
-                company,
-                startDate,
-                endDate,
-                description,
-                area,
-                image
-            }, this.props.profileID);
-        console.log(response);
+            { role, company, startDate, endDate, description, area, image }, 
+            this.props.profileID);
+        this.props.addNewExperience(response);
         this.handleClose();
     }
     render() {

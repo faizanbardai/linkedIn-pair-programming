@@ -13,8 +13,6 @@ export class NavBar extends Component {
     }
     searchUser = (e) => {
         e.preventDefault();
-        console.log(this.props)
-        // this.props.push(`${this.state.where}/${this.state.what}`)
     }
 
     render() {

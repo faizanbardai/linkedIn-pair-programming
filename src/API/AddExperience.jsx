@@ -14,7 +14,6 @@ const headers = new Headers({
 
 const AddExperience = async (exp, user) => {
     let URL = baseURL+user+"/experiences"
-    console.log(URL);
     try {
         let response = await fetch(URL, {
             method: "POST",
