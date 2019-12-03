@@ -36,7 +36,7 @@ export default class Experience extends Component {
     }
     render() {
         let { setShow } = this.state;
-        let {experiences} = this.props;
+        let { experiences, personal } = this.props;
         
 
         return (
@@ -102,12 +102,12 @@ export default class Experience extends Component {
                     <Card.Header>
                         <div className="d-flex justify-content-between">
                             <div><h2>Experiences</h2></div>
-                            <div
+                            {personal && <div
                                 className="d-flex align-items-center"
                                 onClick={() => this.handleOpen()}
                             >
                                 <FontAwesomeIcon icon={faPlus} />
-                            </div>
+                            </div>}
                         </div>
                     </Card.Header>
                     {experiences && experiences.map(experience => <SingleExperience key={experience._id} experience={experience}/>)}

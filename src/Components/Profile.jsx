@@ -152,7 +152,7 @@ export default class Profile extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <Experience experiences={experiences} addNewExperience={this.addNewExperience} />
+                    <Experience personal={personal} experiences={experiences} addNewExperience={this.addNewExperience} />
                 </section>}
             </>
         )

@@ -12,6 +12,7 @@ export class NavBar extends Component {
         searchKeyword: ""
     }
     searchUser = (e) => {
+
         e.preventDefault();
     }
 
@@ -33,7 +34,7 @@ export class NavBar extends Component {
                     />
                     <Link to={"/profile/" + searchKeyword}>
                         <button
-                            className="btn btn-outline-success my-2 my-sm-0"
+                            className="d-none btn btn-outline-success my-2 my-sm-0"
                             type="submit">
                             Search
                         </button>
