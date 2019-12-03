@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-import { Card, Modal, Form, Row, Col, Button } from 'react-bootstrap';
+import { Card, Modal, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import SingleExperience from './SingleExperience';
-import AddExperience from '../API/AddExperience'
+import AddExperience from '../API/AddExperience';
 
 export default class Experience extends Component {
     state = {
@@ -44,6 +44,9 @@ export default class Experience extends Component {
     }
     render() {
         let { setShow } = this.state;
+        let {experiences} = this.props;
+        
+
         return (
             <>
                 <Modal show={setShow} onHide={() => this.handleClose()}>
@@ -115,12 +118,9 @@ export default class Experience extends Component {
                             </div>
                         </div>
                     </Card.Header>
-                    
-                    <SingleExperience />
-                    <SingleExperience />
-                    <SingleExperience />
+                    {experiences && experiences.map(experience => <SingleExperience key={experience._id} experience={experience}/>)}
                 </Card>
             </>
         )
-    }
+    }    
 }

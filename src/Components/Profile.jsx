@@ -46,7 +46,7 @@ export default class Profile extends Component {
 
     render() {
 
-        let { loading, profile, setShow, firstname, lastname, title, bio, location } = this.state;
+        let { loading, profile, setShow, firstname, lastname, title, bio, location, experiences } = this.state;
 
         return (
             <>
@@ -148,7 +148,7 @@ export default class Profile extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <Experience profileID = {profile._id}/>
+                    <Experience experiences = {experiences}/>
                 </section>}
             </>
         )

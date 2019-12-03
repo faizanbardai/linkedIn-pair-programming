@@ -1,17 +1,17 @@
 import React from 'react'
 import {Card} from 'react-bootstrap'
-export default function SingleExperience() {
+export default function SingleExperience(props) {
+    let experience = props;
+    console.log(experience);
+    let { role, company, startDate, endDate, description, area } = experience.experience;
     return (
 
                 <Card.Body>
-                    <Card.Title>Fayju's Friend</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">Strive School</Card.Subtitle>
-                    <Card.Subtitle className="mb-2 text-muted">oct 2019 - present (2 months)</Card.Subtitle>
-                    <Card.Subtitle className="mb-2 text-muted">Malaysia</Card.Subtitle>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                    </Card.Text>
+                    <Card.Title>{role}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{company}</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">{startDate} - {endDate} (Add moment here)</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">{area}</Card.Subtitle>
+                    <Card.Text> {description}</Card.Text>
                 </Card.Body>
     )
 }
