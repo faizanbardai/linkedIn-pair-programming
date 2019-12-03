@@ -4,6 +4,7 @@ import { Card, Modal, Button, Form, Image, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import UpdateProfile from '../API/UpdateProfile'
+import Experience from './Experience';
 
 export default class Profile extends Component {
     state = {
@@ -51,7 +52,7 @@ export default class Profile extends Component {
                 {loading && <h1>Loading...</h1>}
 
                 {profile && <section>
-                    <Card>
+                    <Card className = "mb-2">
                         <div
                             className="profile-background-image profile-background-image--loading">
                         </div>
@@ -146,6 +147,13 @@ export default class Profile extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
+                    <Card className = "mb-2">
+                    <Card.Header><h2>Experiences</h2></Card.Header>
+                    <Experience/>
+                    <Experience/>
+                    <Experience/>
+                    <Experience/>
+                    </Card>
                 </section>}
             </>
         )
