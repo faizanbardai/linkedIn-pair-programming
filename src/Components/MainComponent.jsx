@@ -7,16 +7,16 @@ import { Footer } from './Footer';
 
 export const MainComponent = () => {
     return (
-        <section className="container-fluid">
-            <Router>
-                <NavBar />
-                <Container>
-                        <Switch>
-                            <Route path="/profile/me" component={Profile}></Route>
-                        </Switch>
-                </Container>
-                <Footer />
-            </Router>
-        </section>
+            <Container fluid className="px-0">
+                <Router>
+                    <NavBar />
+                    <Container className="my-2">
+                            <Switch>
+                                <Route path="/profile/me" component={Profile}></Route>
+                            </Switch>
+                    </Container>
+                    <Footer />
+                </Router>
+            </Container>
     )
 }

@@ -1,23 +1,63 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome, faUserFriends, faBriefcase, faCommentAlt, faBell } from '@fortawesome/free-solid-svg-icons'
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
+
 export const NavBar = () => {
     return (
-        <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <Link className="navbar-brand" to="/">LinkedIn</Link>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+            <Link className="navbar-brand" to="/">
+                <FontAwesomeIcon className="d-block mx-auto" icon={faLinkedin} />
+            </Link>
+            <form className="form-inline my-2 my-lg-0">
+                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                {/* <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> */}
+            </form>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/profile/me">Me</Link>
-                        </li>
-                        {/* <li className="nav-item dropdown">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav ml-auto">
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/">
+                            <FontAwesomeIcon className="d-block mx-auto" icon={faHome} />
+                            Home
+                            <span className="sr-only">(current)</span>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/network">
+                            <FontAwesomeIcon className="d-block mx-auto" icon={faUserFriends} />
+                            My Network
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/jobs">
+                            <FontAwesomeIcon className="d-block mx-auto" icon={faBriefcase} />
+                            Jobs
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/messaging">
+                            <FontAwesomeIcon className="d-block mx-auto" icon={faCommentAlt} />
+                            Messaging
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/notifications">
+                            <FontAwesomeIcon className="d-block mx-auto" icon={faBell} />
+                            Notifications
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/profile/me">
+                            {/* Insert Image here */}
+                            Me
+                        </Link>
+                    </li>
+                    {/* <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dropdown
                 </a>
@@ -28,13 +68,8 @@ export const NavBar = () => {
                 <a className="dropdown-item" href="#">Something else here</a>
                 </div>
             </li> */}
-                    </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                </div>
-            </nav>
-        </div>
+                </ul>
+            </div>
+        </nav>
     )
 }

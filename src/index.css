@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.navbar-nav > li {
+  min-width: 105px;
+  text-align: center;
+}
+
 .profile-background-image--loading {
   background: url(https://www.linkedin.com/sc/h/5qi38njir9vsm46ync2qjvrrs) 50%/cover;
 }
