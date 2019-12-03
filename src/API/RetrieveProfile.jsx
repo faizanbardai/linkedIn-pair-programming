@@ -10,8 +10,8 @@ const headers = new Headers({
     "Content-Type": "application/json"
 });
 
-const RetrieveMyProfile = async () => {
-    let URL = baseURL+"me"
+const RetrieveProfile = async (user) => {
+    let URL = baseURL+user
     try {
         let response = await fetch(URL, {
             method: "GET",
@@ -25,4 +25,4 @@ const RetrieveMyProfile = async () => {
     }
 }
 
-export default RetrieveMyProfile;
+export default RetrieveProfile;

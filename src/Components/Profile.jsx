@@ -1,4 +1,4 @@
-import RetrieveMyProfile from '../API/RetrieveMyProfile'
+import RetrieveProfile from '../API/RetrieveProfile'
 import React, { Component } from 'react'
 import { Card, Modal, Button, Form, Image, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -154,7 +154,8 @@ export default class Profile extends Component {
         )
     }
     componentDidMount = async () => {
-        let profile = await RetrieveMyProfile();
+        let user = this.props.match.params.username;
+        let profile = await RetrieveProfile(user);
         let experiences = await GetExperience(profile.username);
         this.setState({
             profile: profile,

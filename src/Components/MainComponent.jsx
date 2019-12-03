@@ -12,7 +12,7 @@ export const MainComponent = () => {
                     <NavBar />
                     <Container className="my-2">
                             <Switch>
-                                <Route path="/profile/me" component={Profile}></Route>
+                                <Route path="/profile/:username" component={Profile}></Route>
                             </Switch>
                     </Container>
                     <Footer />
