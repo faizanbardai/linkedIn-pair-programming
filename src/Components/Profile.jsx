@@ -17,7 +17,8 @@ export default class Profile extends Component {
         bio: "",
         location: "",
         image: "",
-        setShow: false
+        setShow: false, // for modal
+        personal: "" // show "edit profile" button only on personal profile page
     }
 
     handleClose() {        
@@ -45,7 +46,7 @@ export default class Profile extends Component {
 
     render() {
 
-        let { loading, profile, setShow, firstname, lastname, title, bio, location, experiences } = this.state;
+        let { loading, profile, setShow, firstname, lastname, title, bio, location, experiences, personal } = this.state;
 
         return (
             <>
@@ -74,7 +75,7 @@ export default class Profile extends Component {
                                     </div>
                                 </Col>
                                 <Col sm={3}>
-                                    <Button onClick={() => this.handleOpen()} variant="primary"><FontAwesomeIcon icon={faEdit} />  Edit Profile</Button>
+                                    {personal && <Button onClick={() => this.handleOpen()} variant="primary"><FontAwesomeIcon icon={faEdit} />  Edit Profile</Button>}
                                 </Col>
                             </Row>
                         </Card>
@@ -154,6 +155,7 @@ export default class Profile extends Component {
     }
     componentDidMount = async () => {
         let user = this.props.match.params.username;
+        user==="me"? this.setState({personal: true}):this.setState({personal: false})
         let profile = await RetrieveProfile(user);
         let experiences = await GetExperience(profile.username);
         this.setState({
@@ -171,6 +173,7 @@ export default class Profile extends Component {
     componentDidUpdate = async (prevProps) => {
         if (this.props.location.pathname !== prevProps.location.pathname) {
             let user = this.props.match.params.username;
+            user==="me"? this.setState({personal: true}):this.setState({personal: false})
             let profile = await RetrieveProfile(user);
             let experiences = await GetExperience(profile.username);
             this.setState({
