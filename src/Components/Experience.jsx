@@ -108,7 +108,7 @@ export default class Experience extends Component {
                 </Modal>
                 <Card className="mb-2">
                     <Card.Header>
-                        <div class="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between">
                             <div><h2>Experiences</h2></div>
                             <div
                                 className="d-flex align-items-center"

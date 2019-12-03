@@ -3,7 +3,6 @@ import {Card} from 'react-bootstrap'
 import Moment from 'react-moment';
 export default function SingleExperience(props) {
     let experience = props;
-    console.log(experience);
     let { role, company, startDate, endDate, description, area } = experience.experience;
     return (
 

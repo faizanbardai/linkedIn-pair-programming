@@ -169,4 +169,23 @@ export default class Profile extends Component {
             loading: false
         })
     }
+    componentDidUpdate = async (prevProps) => {
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            let user = this.props.match.params.username;
+            let profile = await RetrieveProfile(user);
+            let experiences = await GetExperience(profile.username);
+            this.setState({
+                profile: profile,
+                experiences: experiences,
+                firstname: profile.name,
+                lastname: profile.surname,
+                title: profile.title,
+                bio: profile.bio,
+                location: profile.area,
+                image: profile.image,
+                loading: false
+            })
+        }
+    }
+    
 }
