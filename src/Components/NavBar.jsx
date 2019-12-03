@@ -7,34 +7,33 @@ import GetAllUsers from '../API/GetAllUsers';
 
 export class NavBar extends Component {
     state = {
-        allUsers: "",
-        searchKeyword: "",
-        filteredUsers: [],
-        user: "me"
+
     }
 
     filterUsers(e) {
-
         this.setState({ searchKeyword: e.target.value })
-        if (this.state.searchKeyword.length > 1) {
-            console.log("greater than 2")
+        if (this.state.searchKeyword && this.state.searchKeyword.length > 1) {
             this.setState({
                 filteredUsers: this.state.allUsers
                     .filter(user => user.name.toLowerCase()
-                        .includes(this.state.searchKeyword.toLowerCase()))
+                        .includes(this.state.searchKeyword.toLowerCase())
+                    )
             })
         }
-        if (this.state.filteredUsers.length !== 0) {
+        if (this.state.filteredUsers && this.state.filteredUsers.length > 0) {
             this.setState({
                 user: this.state.filteredUsers[0].username
             })
         }
+
     }
+
+
 
     render() {
         let { searchKeyword, user } = this.state;
         return (
-            <nav className="navbar navbar-expand-md navbar-dark bg-dark">                
+            <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                 <Link className="navbar-brand" to="/">
                     <FontAwesomeIcon className="d-block mx-auto" icon={faLinkedin} />
                 </Link>
@@ -113,7 +112,7 @@ export class NavBar extends Component {
                     </ul>
                 </div>
             </nav>
-            
+
         )
     }
     componentDidMount = async () => {
