@@ -1,38 +1,53 @@
 import React, { Component } from 'react'
-
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserFriends, faBriefcase, faCommentAlt, faBell } from '@fortawesome/free-solid-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
-
-
+import GetAllUsers from '../API/GetAllUsers';
 
 export class NavBar extends Component {
     state = {
-        searchKeyword: ""
+        allUsers: "",
+        searchKeyword: "",
+        filteredUsers: [],
+        user: "me"
     }
-    searchUser = (e) => {
 
-        e.preventDefault();
+    filterUsers(e) {
+
+        this.setState({ searchKeyword: e.target.value })
+        if (this.state.searchKeyword.length > 1) {
+            console.log("greater than 2")
+            this.setState({
+                filteredUsers: this.state.allUsers
+                    .filter(user => user.name.toLowerCase()
+                        .includes(this.state.searchKeyword.toLowerCase()))
+            })
+        }
+        if (this.state.filteredUsers.length !== 0) {
+            this.setState({
+                user: this.state.filteredUsers[0].username
+            })
+        }
     }
 
     render() {
-        let { searchKeyword } = this.state;
+        let { searchKeyword, user } = this.state;
         return (
-            <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-md navbar-dark bg-dark">                
                 <Link className="navbar-brand" to="/">
                     <FontAwesomeIcon className="d-block mx-auto" icon={faLinkedin} />
                 </Link>
-                <form onSubmit={(e) => this.searchUser(e)} className="form-inline my-2 my-lg-0">
+                <form onSubmit={(e) => e.preventDefault()} className="form-inline my-2 my-lg-0">
                     <input
                         value={searchKeyword}
-                        onChange={(e) => this.setState({ searchKeyword: e.target.value })}
+                        onChange={(e) => this.filterUsers(e)}
                         className="form-control mr-sm-2"
                         type="search"
                         placeholder="Search"
                         aria-label="Search"
                     />
-                    <Link to={"/profile/" + searchKeyword}>
+                    <Link to={"/profile/" + user}>
                         <button
                             className="d-none btn btn-outline-success my-2 my-sm-0"
                             type="submit">
@@ -98,6 +113,14 @@ export class NavBar extends Component {
                     </ul>
                 </div>
             </nav>
+            
         )
     }
+    componentDidMount = async () => {
+        let allUsers = await GetAllUsers();
+        this.setState({
+            allUsers: allUsers
+        })
+    }
+
 }
