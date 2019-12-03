@@ -4,6 +4,7 @@ import { Card, Modal, Button, Form, Image, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import UpdateProfile from '../API/UpdateProfile'
+import GetExperience from '../API/GetExperience'
 import Experience from './Experience';
 
 export default class Profile extends Component {
@@ -74,7 +75,7 @@ export default class Profile extends Component {
                                     </div>
                                 </Col>
                                 <Col sm={3}>
-                                    <Button onClick={() => this.handleOpen()} variant="primary"><FontAwesomeIcon className="" icon={faEdit} />  Edit Profile</Button>
+                                    <Button onClick={() => this.handleOpen()} variant="primary"><FontAwesomeIcon icon={faEdit} />  Edit Profile</Button>
                                 </Col>
                             </Row>
                         </Card>
@@ -147,43 +148,24 @@ export default class Profile extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                    <Card className = "mb-2">
-                    <Card.Header><h2>Experiences</h2></Card.Header>
-                    <Experience/>
-                    <Experience/>
-                    <Experience/>
-                    <Experience/>
-                    </Card>
+                    <Experience profileID = {profile._id}/>
                 </section>}
             </>
         )
     }
     componentDidMount = async () => {
-        let response = await RetrieveMyProfile();
-        // let response = {
-        //     area: "Munich",
-        //     bio: "React Developer",
-        //     createdAt: "2019-12-02T11:42:22.087Z",
-        //     email: "faizan.badruddin.bardai@gmail.com",
-        //     image: "https://media.licdn.com/dms/image/C5603AQFYPTE_eluewQ/profile-displayphoto-shrink_200_200/0?e=1580947200&v=beta&t=z_TXOohR-SuzKzLzlufB-iuf1ReTcbplwyhYtWlkbb8",
-        //     name: "FayJu",
-        //     surname: "Bardai",
-        //     title: "CEO of TASH/Jeff",
-        //     updatedAt: "2019-12-02T16:25:41.319Z",
-        //     username: "user24",
-        //     __v: 0,
-        //     _id: "5de4f89e9e3b390017356a27"
-        // };
+        let profile = await RetrieveMyProfile();
+        let experiences = await GetExperience(profile.username);
         this.setState({
-            profile: response,
-            firstname: response.name,
-            lastname: response.surname,
-            title: response.title,
-            bio: response.bio,
-            location: response.area,
-            image: response.image,
+            profile: profile,
+            experiences: experiences,
+            firstname: profile.name,
+            lastname: profile.surname,
+            title: profile.title,
+            bio: profile.bio,
+            location: profile.area,
+            image: profile.image,
             loading: false
         })
-        console.log("Component did mount. Loading: ", this.state.loading);
     }
 }

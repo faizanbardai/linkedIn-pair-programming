@@ -1,19 +1,126 @@
-import React from 'react'
-import {Card} from 'react-bootstrap'
-export default function Experience() {
-    return (
+import React, { Component } from 'react'
 
-            // <Card className = "mb-2">
-                <Card.Body>
-                    <Card.Title>Fayju's Friend</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">Strive School</Card.Subtitle>
-                    <Card.Subtitle className="mb-2 text-muted">oct 2019 - present (2 months)</Card.Subtitle>
-                    <Card.Subtitle className="mb-2 text-muted">Malaysia</Card.Subtitle>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                    </Card.Text>
-                </Card.Body>
-            // </Card>
-    )
+import { Card, Modal, Form, Row, Col, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import SingleExperience from './SingleExperience';
+import AddExperience from '../API/AddExperience'
+
+export default class Experience extends Component {
+    state = {
+        setShow: false
+    }
+    handleClose() {
+        this.setState({
+            setShow: false
+        })
+    }
+    handleOpen = () => {
+        this.setState({
+            setShow: true
+        })
+    }
+    handleChange = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+        this.setState({
+            [name]: value
+        })
+    }
+    handleSubmit = async () => {
+        let {role, company, startDate, endDate, description, area, image} = this.state
+        let response = await AddExperience(
+            {
+                role,
+                company,
+                startDate,
+                endDate,
+                description,
+                area,
+                image
+            }, this.props.profileID);
+        console.log(response);
+        this.handleClose();
+    }
+    render() {
+        let { setShow } = this.state;
+        return (
+            <>
+                <Modal show={setShow} onHide={() => this.handleClose()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Experience</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="LinkedInBasicProfile">
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control
+                                    name="role"
+                                    placeholder="Title"
+                                    onChange={(e) => this.handleChange(e)}
+                                />
+                                <Form.Label>Company</Form.Label>
+                                <Form.Control
+                                    name="company"
+                                    placeholder="Company"
+                                    onChange={(e) => this.handleChange(e)}
+                                />
+                                <Form.Label>Start Date</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    name="startDate"
+                                    placeholder="Start Date"
+                                    onChange={(e) => this.handleChange(e)}
+                                />
+                                <Form.Label>End Date</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    name="endDate"
+                                    placeholder="End Date"
+                                    onChange={(e) => this.handleChange(e)}
+                                />
+                                <Form.Label>Location</Form.Label>
+                                <Form.Control
+                                    name="area"
+                                    placeholder="Location"
+                                    onChange={(e) => this.handleChange(e)}
+                                />
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control
+                                    name="description"
+                                    placeholder="Description"
+                                    onChange={(e) => this.handleChange(e)}
+                                />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.handleClose()}>
+                            Close
+                            </Button>
+                        <Button variant="primary" onClick={() => this.handleSubmit()}>
+                            Save Changes
+                            </Button>
+                    </Modal.Footer>
+                </Modal>
+                <Card className="mb-2">
+                    <Card.Header>
+                        <div class="d-flex justify-content-between">
+                            <div><h2>Experiences</h2></div>
+                            <div
+                                className="d-flex align-items-center"
+                                onClick={() => this.handleOpen()}
+                            >
+                                <FontAwesomeIcon icon={faPlus} />
+                            </div>
+                        </div>
+                    </Card.Header>
+                    
+                    <SingleExperience />
+                    <SingleExperience />
+                    <SingleExperience />
+                </Card>
+            </>
+        )
+    }
 }
