@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserFriends, faBriefcase, faCommentAlt, faBell } from '@fortawesome/free-solid-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
-import GetAllUsers from '../API/GetAllUsers';
 import { Image, ListGroup } from 'react-bootstrap';
 
 export class NavBar extends Component {
-    state = {}
+    state = {
+        allUsers: this.props.allUsers
+    }
 
     filterUsers(e) {
         let searchKeyword = e.target.value;
@@ -29,7 +30,7 @@ export class NavBar extends Component {
                     filteredUsers: filteredUsers,
                     user: filteredUsers[0].username
                 })
-            } 
+            }
         }
     }
 
@@ -57,7 +58,6 @@ export class NavBar extends Component {
                                 Search
                         </button>
                         </Link>
-
                     </form>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -109,33 +109,24 @@ export class NavBar extends Component {
                         </ul>
                     </div>
                 </nav>
-                <ListGroup 
+                <ListGroup
                     id="search-autocomplete"
                     className=""
                 >
-                    {filteredUsers && filteredUsers.map(user => 
-                    
-                    <Link to={"/profile/" + user.username}>
-                        <ListGroup.Item action>
-                            {user.name} {user.surname} &nbsp;
+                    {filteredUsers && filteredUsers.map(user =>
+                        <Link to={"/profile/" + user.username}>
+                            <ListGroup.Item action>
+                                {user.name} {user.surname} &nbsp;
                             <Image
-                                style={{ height: "30px" }}
-                                src={user.image}
-                                roundedCircle
-                            />
-                        </ListGroup.Item>
-                    </Link>
-                    
+                                    style={{ height: "30px" }}
+                                    src={user.image}
+                                    roundedCircle
+                                />
+                            </ListGroup.Item>
+                        </Link>
                     )}
                 </ListGroup>
             </>
         )
     }
-    componentDidMount = async () => {
-        let allUsers = await GetAllUsers();
-        this.setState({
-            allUsers: allUsers
-        })
-    }
-
 }
