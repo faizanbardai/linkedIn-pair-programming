@@ -64,3 +64,12 @@ code {
 .t-black {
   color: rgba(0,0,0,.9);
 }
+
+#search-autocomplete {
+  position: absolute;
+  top:70px;  
+  margin-top: 10px;
+  margin-left: 45px;
+  width: 250px;
+  z-index: 1;
+}
