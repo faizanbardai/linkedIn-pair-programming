@@ -1,15 +1,16 @@
-import authorization from "./Authorization";
-const credentials = authorization("striveLinkedIn")
+// import authorization from "./Authorization";
+// const credentials = authorization("striveLinkedIn")
 const baseUrl = "https://striveschool.herokuapp.com/api/posts/";
-const username = credentials.username;
-const password = credentials.password;
-const auth = btoa(username + ":" + password);
-const headers = new Headers({
-    "Authorization": "Basic " + auth,
-    "Content-Type": "application/json"
-});
+// const username = credentials.username;
+// const password = credentials.password;
 
-const AddPost = async (text) => {
+
+const AddPost = async (text, username, password) => {
+    const auth = btoa(username + ":" + password);
+    const headers = new Headers({
+        "Authorization": "Basic " + auth,
+        "Content-Type": "application/json"
+    });
     let URL = baseUrl
 
     try {

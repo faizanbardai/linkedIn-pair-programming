@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import RetrieveProfile from '../API/RetrieveProfile';
 import '../Login.css';
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ export default class Login extends Component {
         })
     }
     render() {
-        let { login, user } = this.state;
+        let { login, user, username, password } = this.state;
         return (
             <>
                 <Router>
@@ -74,7 +74,8 @@ export default class Login extends Component {
                             </Form>
                         </Container>
                     </Route>
-                    <Route path="/home" exact render={props=> <MainComponent myProfile={user}/>} />
+                    <Route path="/home" exact render={
+                        props=> <MainComponent username={username} password={password} myProfile={user}/>} />
                 </Router>
             </>
         )

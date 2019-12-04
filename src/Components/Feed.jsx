@@ -72,12 +72,16 @@ export default class Feed extends Component {
   }
 
   componentDidMount = async () => {
+    let { username, password } = this.props;
     let allUserPosts = [];
     this.setState({
-      posts: await GetAllPosts(),
-      allUsers: await GetAllUsers()
+      posts: await GetAllPosts(username, password),
+      // allUsers: await GetAllUsers()
     })
-    let { posts, allUsers } = this.state;
+    let { posts } = this.state;
+    console.log(posts);
+    let { allUsers } = this.props;
+
     for (let i = posts.length - 1; i > 0; i--) {
       for (let j = allUsers.length - 1; j > 0; j--) {
         if (posts[i].username === allUsers[j].username) {

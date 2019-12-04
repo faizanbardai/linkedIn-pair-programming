@@ -66,11 +66,12 @@ export default class Profile extends Component {
         }
     }
     updateProfileAndExperience = async () => {
+        let { username, password } = this.props;
         let user = this.props.match.params.username;
         this.setState({ personal: user === "me" });
-        let profile = await RetrieveProfile(user);
+        let profile = await RetrieveProfile(user, username, password);
         let experiences;
-        if (profile) { experiences = await GetExperience(profile.username); }
+        if (profile) { experiences = await GetExperience(profile.username, username, password); }
         this.setState({
             profile: profile,
             experiences: experiences,

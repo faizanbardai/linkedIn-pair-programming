@@ -20,11 +20,12 @@ export default class ProfileIntro extends Component {
     }
     handleSubmit = async () => {
         let { name, surname, bio, title, area, image } = this.state;
+        let { username, password } = this.props;
         // console.log({ name, surname, bio, title, area, image })
         let profile = await UpdateProfile(
             {
                 name, surname, title, bio, area, image
-            }, this.props.profile._id);
+            }, this.props.profile._id, username, password);
         this.props.updateProfile(profile);
         this.setState({
             setShow: false,

@@ -20,7 +20,7 @@ export class NavBar extends Component {
             })
         }
         if (searchKeyword && searchKeyword.length > 0) {
-            let filteredUsers = this.state.allUsers
+            let filteredUsers = this.props.allUsers
                 .filter(user =>
                     user.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
                     user.surname.toLowerCase().includes(searchKeyword.toLowerCase())

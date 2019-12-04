@@ -12,7 +12,7 @@ export class MainComponent extends Component {
     state = {}
     render() {
         let { allUsers } = this.state;
-        let { myProfile } = this.props;
+        let { myProfile, username, password } = this.props;
 
         return (
             <Container fluid className="px-0">
@@ -22,12 +22,22 @@ export class MainComponent extends Component {
                         <Switch>
                             <Route
                                 path="/profile/:username"
-                                component={Profile}>
+                                render={props => <Profile
+                                    username={username}
+                                    password={password}
+                                />
+                                }
+                            >
                             </Route>
                             <Route
                                 path="/home"
                                 exact
-                                render={props => <Feed allUsers={allUsers} myProfile={myProfile}/>}>
+                                render={props => <Feed
+                                    allUsers={allUsers}
+                                    myProfile={myProfile}
+                                    username={username}
+                                    password={password}
+                                />}>
                             </Route>
                         </Switch>
                     </Container>
@@ -37,9 +47,9 @@ export class MainComponent extends Component {
         )
     }
     componentDidMount = async () => {
+        let { username, password } = this.props;
         this.setState({
-            // myProfile: await RetrieveProfile("me"),            
-            allUsers: await GetAllUsers()
+            allUsers: await GetAllUsers(username, password)
         })
     }
 }    
