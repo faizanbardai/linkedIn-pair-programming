@@ -12,13 +12,13 @@ export class NavBar extends Component {
     filterUsers(e) {
         let searchKeyword = e.target.value;
         this.setState({ searchKeyword: searchKeyword })
-        if (searchKeyword.length < 2) {
+        if (searchKeyword.length === 0) {
             this.setState({
                 filteredUsers: [],
                 user: ""
             })
         }
-        if (searchKeyword && searchKeyword.length > 2) {
+        if (searchKeyword && searchKeyword.length > 0) {
             let filteredUsers = this.state.allUsers
                 .filter(user =>
                     user.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
