@@ -4,6 +4,8 @@ import { Row, Col } from 'react-bootstrap';
 import GetExperience from '../API/GetExperience'
 import Experience from './Experience';
 import ProfileIntro from './ProfileIntro';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner'
 
 export default class Profile extends Component {
     state = {
@@ -28,25 +30,30 @@ export default class Profile extends Component {
 
         return (
             <>
-                {loading && <h1>Loading...</h1>}
+                {loading ?
 
-                <section>
-                    <Row>
-                        <Col md={{ span: 8, offset: 2 }}>
-                            {profile? (
-                                <ProfileIntro 
-                                    personal={personal} 
-                                    profile={profile}
-                                    updateProfile = {this.updateProfile} 
-                                />
-                            ) : (
-                                    <div>Sorry no user found!</div>
-                                )
-                            }
-                            {experiences && <Experience profileID={profile._id} personal={personal} experiences={experiences} addNewExperience={this.addNewExperience} />}
-                        </Col>
-                    </Row>
-                </section>
+                    <div className="d-flex justify-content-center">
+                        <Loader type="Oval" color="green" height={80} width={80} />
+                    </div>
+                    :
+                    <section>
+                        <Row>
+                            <Col md={{ span: 8, offset: 2 }}>
+                                {profile ? (
+                                    <ProfileIntro
+                                        personal={personal}
+                                        profile={profile}
+                                        updateProfile={this.updateProfile}
+                                    />
+                                ) : (
+                                        <div>Sorry no user found!</div>
+                                    )
+                                }
+                                {experiences && <Experience profileID={profile._id} personal={personal} experiences={experiences} addNewExperience={this.addNewExperience} />}
+                            </Col>
+                        </Row>
+                    </section>
+                }
             </>
         )
     }
