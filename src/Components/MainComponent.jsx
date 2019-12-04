@@ -5,18 +5,19 @@ import { Container } from 'react-bootstrap';
 import Profile from './Profile'
 import { NavBar } from './NavBar';
 import { Footer } from './Footer';
-import RetrieveProfile from '../API/RetrieveProfile';
 import Feed from './Feed';
 import GetAllUsers from '../API/GetAllUsers';
 
 export class MainComponent extends Component {
     state = {}
     render() {
-        let { allUsers, myProfile } = this.state;
+        let { allUsers } = this.state;
+        let { myProfile } = this.props;
+
         return (
             <Container fluid className="px-0">
                 <Router>
-                    {this.state.myProfile && <NavBar allUsers={allUsers} myProfile={myProfile} />}
+                    {myProfile && <NavBar allUsers={allUsers} myProfile={myProfile} />}
                     <Container className="my-2">
                         <Switch>
                             <Route
@@ -24,7 +25,7 @@ export class MainComponent extends Component {
                                 component={Profile}>
                             </Route>
                             <Route
-                                path="/"
+                                path="/home"
                                 exact
                                 render={props => <Feed allUsers={allUsers} myProfile={myProfile}/>}>
                             </Route>
@@ -37,7 +38,7 @@ export class MainComponent extends Component {
     }
     componentDidMount = async () => {
         this.setState({
-            myProfile: await RetrieveProfile("me"),
+            // myProfile: await RetrieveProfile("me"),            
             allUsers: await GetAllUsers()
         })
     }
