@@ -121,9 +121,9 @@ export default class ProfileIntro extends Component {
                                             value={bio}
                                             onChange={(e) => this.setState({ bio: e.target.value })}
                                         />
-                                        <Form.Label>Biography</Form.Label>
+                                        <Form.Label>Image</Form.Label>
                                         <Form.Control
-                                            placeholder="Biography"
+                                            placeholder="Image"
                                             value={image}
                                             onChange={(e) => this.setState({ image: e.target.value })}
                                         />

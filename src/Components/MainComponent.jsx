@@ -6,6 +6,7 @@ import Profile from './Profile'
 import { NavBar } from './NavBar';
 import { Footer } from './Footer';
 import RetrieveProfile from '../API/RetrieveProfile';
+import Feed from './Feed';
 
 
 
@@ -20,6 +21,8 @@ export class MainComponent extends Component {
                     <Container className="my-2">
                         <Switch>
                             <Route path="/profile/:username" component={Profile}></Route>
+                            <Route path="/" exact component={Feed}></Route>
+
                         </Switch>
                     </Container>
                     <Footer />

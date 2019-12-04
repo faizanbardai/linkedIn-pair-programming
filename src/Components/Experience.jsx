@@ -56,7 +56,7 @@ export default class Experience extends Component {
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="LinkedInBasicProfile">
-                                <div className="d-flex justify-content-between mb-2">
+                                <div className="d-flex justify-content-around mb-2">
                                     <div>
                                         <Form.Label>Title</Form.Label>
                                         <Form.Control
@@ -74,7 +74,7 @@ export default class Experience extends Component {
                                         />
                                     </div>
                                 </div>
-                                <div className="d-flex justify-content-between mb-2">
+                                <div className="d-flex justify-content-around mb-2">
                                     <div>
                                         <Form.Label>Start Date</Form.Label>
                                         <Form.Control
