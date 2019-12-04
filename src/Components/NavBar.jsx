@@ -4,35 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faUserFriends, faBriefcase, faCommentAlt, faBell } from '@fortawesome/free-solid-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import GetAllUsers from '../API/GetAllUsers';
+import { Image } from 'react-bootstrap';
 
 export class NavBar extends Component {
-    state = {
-
-    }
+    state = {}
 
     filterUsers(e) {
         let searchKeyword = e.target.value;
         this.setState({ searchKeyword: searchKeyword })
         if (searchKeyword && searchKeyword.length > 2) {
             let filteredUsers = this.state.allUsers
-                .filter(user => user.name.toLowerCase()
-                .includes(searchKeyword.toLowerCase()) ||
-                user.surname.toLowerCase()
-                .includes(searchKeyword.toLowerCase())
-            )
-            this.setState({
-                filteredUsers: filteredUsers
-            })
+                .filter(user =>
+                    user.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+                    user.surname.toLowerCase().includes(searchKeyword.toLowerCase())
+                )            
             if (filteredUsers && filteredUsers.length > 0) {
                 this.setState({
                     user: filteredUsers[0].username
                 })
+            }
         }
-        }
-
     }
-
-
 
     render() {
         let { searchKeyword, user } = this.state;
@@ -62,7 +54,6 @@ export class NavBar extends Component {
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item active">
@@ -98,8 +89,13 @@ export class NavBar extends Component {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/profile/me">
-                                {/* Insert Image here */}
-                                Me
+                                <Image 
+                                    className="d-block mx-auto"
+                                    style={{height: "30px"}} 
+                                    src={this.props.myProfile.image} 
+                                    roundedCircle 
+                                />
+                                {/* Me */}
                         </Link>
                         </li>
                         {/* <li className="nav-item dropdown">
