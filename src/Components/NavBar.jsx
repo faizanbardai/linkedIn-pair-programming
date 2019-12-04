@@ -16,6 +16,8 @@ export class NavBar extends Component {
         if (searchKeyword && searchKeyword.length > 2) {
             let filteredUsers = this.state.allUsers
                 .filter(user => user.name.toLowerCase()
+                .includes(searchKeyword.toLowerCase()) ||
+                user.surname.toLowerCase()
                 .includes(searchKeyword.toLowerCase())
             )
             this.setState({
