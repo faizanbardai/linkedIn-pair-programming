@@ -32,12 +32,20 @@ export default class Experience extends Component {
             { role, company, startDate, endDate, description, area, image }, 
             this.props.profileID);
         this.props.addNewExperience(response);
+        this.setState({
+            role: "",
+            company: "",
+            startDate: "",
+            endDate: "",
+            description: "",
+            area: "",
+            image: ""
+        })
         this.handleClose();
     }
     render() {
         let { setShow } = this.state;
         let { experiences, personal } = this.props;
-        
 
         return (
             <>
@@ -48,40 +56,59 @@ export default class Experience extends Component {
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="LinkedInBasicProfile">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control
-                                    name="role"
-                                    placeholder="Title"
-                                    onChange={(e) => this.handleChange(e)}
-                                />
-                                <Form.Label>Company</Form.Label>
-                                <Form.Control
-                                    name="company"
-                                    placeholder="Company"
-                                    onChange={(e) => this.handleChange(e)}
-                                />
-                                <Form.Label>Start Date</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="startDate"
-                                    placeholder="Start Date"
-                                    onChange={(e) => this.handleChange(e)}
-                                />
-                                <Form.Label>End Date</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="endDate"
-                                    placeholder="End Date"
-                                    onChange={(e) => this.handleChange(e)}
-                                />
+                                <div className="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <Form.Label>Title</Form.Label>
+                                        <Form.Control
+                                            name="role"
+                                            placeholder="Title"
+                                            onChange={(e) => this.handleChange(e)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <Form.Label>Company</Form.Label>
+                                        <Form.Control
+                                            name="company"
+                                            placeholder="Company"
+                                            onChange={(e) => this.handleChange(e)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <Form.Label>Start Date</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            name="startDate"
+                                            placeholder="Start Date"
+                                            onChange={(e) => this.handleChange(e)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <Form.Label>End Date</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            name="endDate"
+                                            placeholder="End Date"
+                                            onChange={(e) => this.handleChange(e)}
+                                        />
+                                    </div>
+                                </div>
                                 <Form.Label>Location</Form.Label>
                                 <Form.Control
                                     name="area"
                                     placeholder="Location"
                                     onChange={(e) => this.handleChange(e)}
                                 />
+                                <Form.Label>Image</Form.Label>
+                                <Form.Control
+                                    name="image"
+                                    placeholder="Location"
+                                    onChange={(e) => this.handleChange(e)}
+                                />
                                 <Form.Label>Description</Form.Label>
                                 <Form.Control
+                                    as="textarea" rows="3"
                                     name="description"
                                     placeholder="Description"
                                     onChange={(e) => this.handleChange(e)}
