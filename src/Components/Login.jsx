@@ -35,7 +35,7 @@ export default class Login extends Component {
         
         this.setState({
             login: true,
-            myProfile: response
+            myProfile: myProfile
         })
     }
     render() {

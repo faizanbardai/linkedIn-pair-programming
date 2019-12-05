@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from './Login';
-import { Home } from './Home';
-import { Container, Navbar } from 'react-bootstrap';
+import Profile from './Profile';
+import { NavBar } from './NavBar';
+import { Container } from 'react-bootstrap';
+import Feed from './Feed';
+import Home from './Home';
 
 
 export default class App extends Component {
@@ -13,6 +16,7 @@ export default class App extends Component {
     }
     handleLoginSuccess = (username, password, myProfile, allUsers) => {
         this.setState({
+            isLoggedIn: true,
             username: username,
             password: password,
             myProfile: myProfile,
@@ -24,10 +28,10 @@ export default class App extends Component {
         return (
             <Container fluid>
                 <Router>
-                    {isLoggedIn && <Navbar allUsers={allUsers} myProfileImg={myProfile.image} />}
                     <Switch>
-                        <Route path="/" exact render={props => <Login test="test" handleLoginSuccess={this.handleLoginSuccess} />} />
-                        <Route path="/home" exact render={props => <Home username={username} password={password} myProfile={myProfile} />} />
+                        <Route path="/" exact render={props => <Login handleLoginSuccess={this.handleLoginSuccess} />} />
+                        <Route path="/" exact render={props => <Home allUsers={allUsers} username={username} password={password} />} />                        
+                        <Route path="/profile/:username" render={props =><Profile username={username}password={password} />} />
                     </Switch>
                 </Router>
             </Container>

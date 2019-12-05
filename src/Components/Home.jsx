@@ -1,45 +1,24 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Container } from 'react-bootstrap';
-import Profile from './Profile'
+import React, { Component } from 'react';
+import { NavBar } from './NavBar';
 import { Footer } from './Footer';
 import Feed from './Feed';
 
-export class Home extends Component {
-    state = {}
-    render() {
-        let { allUsers } = this.state;
-        let { myProfile, username, password } = this.props;
 
+export default class Home extends Component {
+    render() {
         return (
-            <Container fluid className="px-0">
-                <Router>
-                    <Container className="my-2">
-                        <Switch>
-                            <Route
-                                path="/profile/:username"
-                                render={props =>
-                                    <Profile
-                                        username={username}
-                                        password={password}
-                                    />
-                                }
-                            >
-                            </Route>
-                            <Route
-                                path="/home"
-                                exact
-                                render={props => <Feed
-                                    allUsers={allUsers}
-                                    username={username}
-                                    password={password}
-                                />}>
-                            </Route>
-                        </Switch>
-                    </Container>
-                    <Footer />
-                </Router>
-            </Container>
+            <div>
+                <NavBar allUsers={allUsers} myProfileImg={myProfile.image} />
+                <Feed allUsers={allUsers} username={username} password={password} />
+                <Footer />
+            </div>
         )
     }
-}    
+}
+
+
+
+
+
+
+
