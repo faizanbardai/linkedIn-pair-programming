@@ -25,9 +25,7 @@ export default class Profile extends Component {
     }
 
     render() {
-
         let { loading, profile, experiences, personal } = this.state;
-
         return (
             <>
                 {loading ?
@@ -41,6 +39,8 @@ export default class Profile extends Component {
                             <Col md={{ span: 8, offset: 2 }}>
                                 {profile ? (
                                     <ProfileIntro
+                                        username="user24"
+                                        password="48D4vaVh6Ra3DD8w"
                                         personal={personal}
                                         profile={profile}
                                         updateProfile={this.updateProfile}
@@ -66,7 +66,9 @@ export default class Profile extends Component {
         }
     }
     updateProfileAndExperience = async () => {
-        let { username, password } = this.props;
+        // let { username, password } = this.props;
+        let username = "user24";
+        let password = "48D4vaVh6Ra3DD8w"
         let user = this.props.match.params.username;
         this.setState({ personal: user === "me" });
         let profile = await RetrieveProfile(user, username, password);

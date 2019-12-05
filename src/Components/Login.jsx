@@ -10,7 +10,9 @@ import { MainComponent } from './MainComponent';
 
 export default class Login extends Component {
     state = {
-        login: false
+        login: false,
+        username: "user24",
+        password: "48D4vaVh6Ra3DD8w"
     }
     handleChange = (e) => {
         let name = e.target.name;
@@ -20,13 +22,12 @@ export default class Login extends Component {
         })
     }
     handleSubmit = (e) => {
+        let {username, password} = this.state;
         e.preventDefault();
-        console.log("Hi");
-        this.testLogin(this.state.username, this.state.password);
+        this.testLogin(username, password);
     }
     testLogin = async (username, password) => {
         let response = await RetrieveProfile("me", username, password);
-        console.log(response);
         response && this.setState({
             login: true,
             user: response
@@ -37,7 +38,7 @@ export default class Login extends Component {
         return (
             <>
                 <Router>
-                    <Route path="/" exact>
+                    <Route path="/login" exact>
                         <Container className="Login">
                             <FontAwesomeIcon icon={faLinkedin} size="3x" style={{ color: "Blue" }} />
                             <h1 className="display-4">LinkedIn <br /> by FayJu & Tash</h1>
@@ -45,6 +46,7 @@ export default class Login extends Component {
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Control
                                         name="username"
+                                        value="user24"
                                         placeholder="Enter username"
                                         onChange={(e) => this.handleChange(e)}
                                     />
@@ -54,6 +56,7 @@ export default class Login extends Component {
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Control
+                                        value="48D4vaVh6Ra3DD8w"
                                         name="password"
                                         type="password"
                                         placeholder="Enter password"

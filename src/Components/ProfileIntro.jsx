@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Modal, Button, Form, Image, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import UpdateProfile from '../API/UpdateProfile';
 
 export default class ProfileIntro extends Component {
@@ -60,10 +60,13 @@ export default class ProfileIntro extends Component {
                             </div>
                             <div>
                                 {personal &&
-                                    <Button onClick={() =>
+                                    <Button 
+                                        variant="outline-primary" 
+                                        className="rounded-circle"
+                                        onClick={() =>
                                         this.handleOpen()}
-                                        variant="primary">
-                                        <FontAwesomeIcon icon={faEdit} />  Edit Profile</Button>}
+                                    >
+                                        <FontAwesomeIcon icon={faPencilAlt} /></Button>}
                             </div>
                         </div>
                     </Card>

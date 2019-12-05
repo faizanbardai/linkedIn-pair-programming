@@ -7,7 +7,7 @@ import { Image, ListGroup } from 'react-bootstrap';
 
 export class NavBar extends Component {
     state = {
-        allUsers: this.props.allUsers
+
     }
 
     filterUsers(e) {
@@ -38,11 +38,11 @@ export class NavBar extends Component {
         let { searchKeyword, user, filteredUsers } = this.state;
         return (
             <>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark py-0">
                     <Link className="navbar-brand" to="/">
                         <FontAwesomeIcon className="d-block mx-auto" icon={faLinkedin} />
                     </Link>
-                    <form onSubmit={(e) => e.preventDefault()} className="form-inline my-2 my-lg-0">
+                    <form onSubmit={(e) => { e.preventDefault(); }} className="form-inline my-1">
                         <input
                             value={searchKeyword}
                             onChange={(e) => this.filterUsers(e)}
@@ -65,7 +65,7 @@ export class NavBar extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item active">
-                                <Link className="nav-link" to="/">
+                                <Link className="nav-link" to="/home">
                                     <FontAwesomeIcon className="d-block mx-auto" icon={faHome} />
                                     Home
                             <span className="sr-only">(current)</span>
@@ -100,10 +100,9 @@ export class NavBar extends Component {
                                     <Image
                                         className="d-block mx-auto"
                                         style={{ height: "30px" }}
-                                        src={this.props.myProfile.image}
+                                        src={this.props.myProfileImg}
                                         roundedCircle
                                     />
-                                    {/* Me */}
                                 </Link>
                             </li>
                         </ul>
@@ -111,17 +110,18 @@ export class NavBar extends Component {
                 </nav>
                 <ListGroup
                     id="search-autocomplete"
-                    className=""
                 >
                     {filteredUsers && filteredUsers.map(user =>
-                        <Link to={"/profile/" + user.username}>
-                            <ListGroup.Item action>
-                                {user.name} {user.surname} &nbsp;
-                            <Image
-                                    style={{ height: "30px" }}
-                                    src={user.image}
-                                    roundedCircle
-                                />
+                        <Link key={user._id} to={"/profile/" + user.username}>
+                            <ListGroup.Item  action>
+                                <div className="d-flex justify-content-between">
+                                    {user.name} {user.surname} &nbsp;
+                                    <Image
+                                        style={{ height: "30px", width: "30px" }}
+                                        src={user.image ? user.image : "https://via.placeholder.com/30"}
+                                        roundedCircle
+                                    />
+                                </div>
                             </ListGroup.Item>
                         </Link>
                     )}

@@ -17,24 +17,26 @@ export class MainComponent extends Component {
         return (
             <Container fluid className="px-0">
                 <Router>
-                    {myProfile && <NavBar allUsers={allUsers} myProfile={myProfile} />}
+                    {myProfile && <NavBar allUsers={allUsers} myProfileImg={myProfile.image} />}
                     <Container className="my-2">
                         <Switch>
-                            <Route
+                            <Route path="/profile/:username" component={Profile} />
+                            {/* <Route
                                 path="/profile/:username"
-                                render={props => <Profile
-                                    username={username}
-                                    password={password}
-                                />
+                                render={props =>
+                                    <Profile
+                                        username={username}
+                                        password={password}
+                                    />
                                 }
                             >
-                            </Route>
+                            </Route> */}
                             <Route
                                 path="/home"
                                 exact
                                 render={props => <Feed
                                     allUsers={allUsers}
-                                    myProfile={myProfile}
+                                    // myProfile={myProfile}
                                     username={username}
                                     password={password}
                                 />}>

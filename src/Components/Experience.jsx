@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Modal, Form, Button } from 'react-bootstrap';
+import { Card, Modal, Form, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import SingleExperience from './SingleExperience';
@@ -27,9 +27,9 @@ export default class Experience extends Component {
         })
     }
     handleSubmit = async () => {
-        let {role, company, startDate, endDate, description, area, image} = this.state
+        let { role, company, startDate, endDate, description, area, image } = this.state
         let response = await AddExperience(
-            { role, company, startDate, endDate, description, area, image }, 
+            { role, company, startDate, endDate, description, area, image },
             this.props.profileID);
         this.props.addNewExperience(response);
         this.setState({
@@ -56,26 +56,24 @@ export default class Experience extends Component {
                     <Modal.Body>
                         <Form>
                             <Form.Group controlId="LinkedInBasicProfile">
-                                <div className="d-flex justify-content-around mb-2">
-                                    <div>
+                                <Row>
+                                    <Col sm={12} md={6}>
                                         <Form.Label>Title</Form.Label>
                                         <Form.Control
                                             name="role"
                                             placeholder="Title"
                                             onChange={(e) => this.handleChange(e)}
                                         />
-                                    </div>
-                                    <div>
+                                    </Col>
+                                    <Col sm={12} md={6}>
                                         <Form.Label>Company</Form.Label>
                                         <Form.Control
                                             name="company"
                                             placeholder="Company"
                                             onChange={(e) => this.handleChange(e)}
                                         />
-                                    </div>
-                                </div>
-                                <div className="d-flex justify-content-around mb-2">
-                                    <div>
+                                    </Col>
+                                    <Col sm={12} md={6}>
                                         <Form.Label>Start Date</Form.Label>
                                         <Form.Control
                                             type="date"
@@ -83,8 +81,8 @@ export default class Experience extends Component {
                                             placeholder="Start Date"
                                             onChange={(e) => this.handleChange(e)}
                                         />
-                                    </div>
-                                    <div>
+                                    </Col>
+                                    <Col sm={12} md={6}>
                                         <Form.Label>End Date</Form.Label>
                                         <Form.Control
                                             type="date"
@@ -92,8 +90,8 @@ export default class Experience extends Component {
                                             placeholder="End Date"
                                             onChange={(e) => this.handleChange(e)}
                                         />
-                                    </div>
-                                </div>
+                                    </Col>
+                                </Row>
                                 <Form.Label>Location</Form.Label>
                                 <Form.Control
                                     name="area"
@@ -133,13 +131,13 @@ export default class Experience extends Component {
                                 className="d-flex align-items-center"
                                 onClick={() => this.handleOpen()}
                             >
-                                <FontAwesomeIcon icon={faPlus} />
+                                <Button variant="outline-info" className="rounded-circle"><FontAwesomeIcon icon={faPlus} /></Button>
                             </div>}
                         </div>
                     </Card.Header>
-                    {experiences && experiences.map(experience => <SingleExperience key={experience._id} experience={experience}/>)}
+                    {experiences && experiences.map(experience => <SingleExperience key={experience._id} experience={experience} />)}
                 </Card>
             </>
         )
-    }    
+    }
 }
