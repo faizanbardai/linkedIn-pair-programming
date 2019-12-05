@@ -3,6 +3,7 @@ import { Card, Modal, Button, Form, Image, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import UpdateProfile from '../API/UpdateProfile';
+import PostProfileImage from '../API/PostProfileImage';
 
 export default class ProfileIntro extends Component {
     state = {
@@ -18,15 +19,21 @@ export default class ProfileIntro extends Component {
             setShow: true
         })
     }
+    handleImageSelection = async (e) => {
+        let imageData = e.target.files[0];
+        const formData = new FormData();
+        formData.append('profile', imageData);
+        this.setState({ formData })
+    }
     handleSubmit = async () => {
-        let { name, surname, bio, title, area, image } = this.state;
+        let { name, surname, bio, title, area, formData } = this.state;
         let { username, password } = this.props;
-        // console.log({ name, surname, bio, title, area, image })
-        let profile = await UpdateProfile(
+        await UpdateProfile(
             {
-                name, surname, title, bio, area, image
+                name, surname, title, bio, area
             }, this.props.profile._id, username, password);
-        this.props.updateProfile(profile);
+        let profileWithImage = await PostProfileImage(formData, username, password);
+        this.props.updateProfile(profileWithImage);
         this.setState({
             setShow: false,
         })
@@ -60,11 +67,11 @@ export default class ProfileIntro extends Component {
                             </div>
                             <div>
                                 {personal &&
-                                    <Button 
-                                        variant="outline-primary" 
+                                    <Button
+                                        variant="outline-primary"
                                         className="rounded-circle"
                                         onClick={() =>
-                                        this.handleOpen()}
+                                            this.handleOpen()}
                                     >
                                         <FontAwesomeIcon icon={faPencilAlt} /></Button>}
                             </div>
@@ -125,11 +132,18 @@ export default class ProfileIntro extends Component {
                                             value={bio}
                                             onChange={(e) => this.setState({ bio: e.target.value })}
                                         />
-                                        <Form.Label>Image</Form.Label>
+                                        {/* IceCream: Do we want to show image */}
+                                        {/* <Image
+                                            alt="profile"
+                                            style={{width: "200px"}}
+                                            src={image}
+                                            thumbnail>
+                                        </Image> */}
+                                        <Form.Label>Update Image</Form.Label>
                                         <Form.Control
-                                            placeholder="Image"
-                                            value={image}
-                                            onChange={(e) => this.setState({ image: e.target.value })}
+                                            type="file"
+                                            accept="image/png, image/jpeg"
+                                            onChange={(e) => this.handleImageSelection(e)}
                                         />
                                     </Col>
                                 </Row>
