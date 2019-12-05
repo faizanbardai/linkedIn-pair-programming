@@ -41,7 +41,7 @@ export default class ProfileIntro extends Component {
     }
     render() {
         let { profile, personal } = this.props;
-        let { setShow, name, surname, title, bio, area, image } = this.state;
+        let { setShow, name, surname, title, bio, area } = this.state;
         return (
             <>
                 <Card className="mb-2">

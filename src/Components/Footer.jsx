@@ -5,7 +5,7 @@ export const Footer = () => {
     return (
         <footer className="navbar fixed-bottom navbar-dark bg-dark py-0">
             <span className="navbar-text py-0">
-                <Link to="/login">LinkedIn &copy;2019 | Tash/FayJu</Link> 
+                <Link to="">LinkedIn &copy;2019 | Tash/FayJu</Link> 
             </span>
         </footer>
     )

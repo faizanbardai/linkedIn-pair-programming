@@ -6,10 +6,11 @@ import { Link } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { MainComponent } from './MainComponent';
+import { Home } from './Home';
 
 export default class Login extends Component {
     state = {
+        displayLogin: true,
         login: false,
         username: "user24",
         password: "48D4vaVh6Ra3DD8w"
@@ -22,7 +23,7 @@ export default class Login extends Component {
         })
     }
     handleSubmit = (e) => {
-        let {username, password} = this.state;
+        let { username, password } = this.state;
         e.preventDefault();
         this.testLogin(username, password);
     }
@@ -36,10 +37,8 @@ export default class Login extends Component {
     render() {
         let { login, user, username, password } = this.state;
         return (
-            <>
-                <Router>
-                    <Route path="/login" exact>
-                        <Container className="Login">
+            
+                <Container className="Login">
                             <FontAwesomeIcon icon={faLinkedin} size="3x" style={{ color: "Blue" }} />
                             <h1 className="display-4">LinkedIn <br /> by FayJu & Tash</h1>
                             <Form className="Login-form" onSubmit={(e) => this.handleSubmit(e)}>
@@ -52,7 +51,7 @@ export default class Login extends Component {
                                     />
                                     <Form.Text className="text-muted">
                                         We'll never share your username with anyone else except Tash.
-                        </Form.Text>
+                                    </Form.Text>
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Control
@@ -64,7 +63,7 @@ export default class Login extends Component {
                                     />
                                 </Form.Group>
                                 {login ?
-                                    <Link to={"/home"}>
+                                    <Link onClick={()=>this.setState({displayLogin: false})} to={"/home"}>
                                         <Button variant="outline-primary" block>
                                             Welcome {user.name} {user.surname}
                                         </Button>
@@ -72,15 +71,15 @@ export default class Login extends Component {
                                     :
                                     <Button variant="outline-primary" block type="submit">
                                         Submit
-                            </Button>
+                                    </Button>
                                 }
                             </Form>
                         </Container>
-                    </Route>
-                    <Route path="/home" exact render={
-                        props=> <MainComponent username={username} password={password} myProfile={user}/>} />
-                </Router>
-            </>
+                    
+                    {/* <Route path="/home" exact render={
+                        props => <Home username={username} password={password} myProfile={user} />} /> */}
+                
+            
         )
     }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from 'react-bootstrap';
 import Profile from './Profile'
@@ -8,7 +7,7 @@ import { Footer } from './Footer';
 import Feed from './Feed';
 import GetAllUsers from '../API/GetAllUsers';
 
-export class MainComponent extends Component {
+export class Home extends Component {
     state = {}
     render() {
         let { allUsers } = this.state;
@@ -20,8 +19,7 @@ export class MainComponent extends Component {
                     {myProfile && <NavBar allUsers={allUsers} myProfileImg={myProfile.image} />}
                     <Container className="my-2">
                         <Switch>
-                            <Route path="/profile/:username" component={Profile} />
-                            {/* <Route
+                            <Route
                                 path="/profile/:username"
                                 render={props =>
                                     <Profile
@@ -30,13 +28,12 @@ export class MainComponent extends Component {
                                     />
                                 }
                             >
-                            </Route> */}
+                            </Route>
                             <Route
                                 path="/home"
                                 exact
                                 render={props => <Feed
                                     allUsers={allUsers}
-                                    // myProfile={myProfile}
                                     username={username}
                                     password={password}
                                 />}>

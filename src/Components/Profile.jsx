@@ -1,4 +1,5 @@
 import RetrieveProfile from '../API/RetrieveProfile'
+import { withRouter } from "react-router";
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap';
 import GetExperience from '../API/GetExperience'
@@ -7,7 +8,7 @@ import ProfileIntro from './ProfileIntro';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 
-export default class Profile extends Component {
+class Profile extends Component {
     state = {
         loading: true,
         personal: "" // show "edit profile and add exp." button only on personal profile page
@@ -26,6 +27,7 @@ export default class Profile extends Component {
 
     render() {
         let { loading, profile, experiences, personal } = this.state;
+        let { username, password } = this.props;
         return (
             <>
                 {loading ?
@@ -39,8 +41,8 @@ export default class Profile extends Component {
                             <Col md={{ span: 8, offset: 2 }}>
                                 {profile ? (
                                     <ProfileIntro
-                                        username="user24"
-                                        password="48D4vaVh6Ra3DD8w"
+                                        username={username}
+                                        password={password}
                                         personal={personal}
                                         profile={profile}
                                         updateProfile={this.updateProfile}
@@ -66,9 +68,7 @@ export default class Profile extends Component {
         }
     }
     updateProfileAndExperience = async () => {
-        // let { username, password } = this.props;
-        let username = "user24";
-        let password = "48D4vaVh6Ra3DD8w"
+        let { username, password } = this.props;
         let user = this.props.match.params.username;
         this.setState({ personal: user === "me" });
         let profile = await RetrieveProfile(user, username, password);
@@ -81,3 +81,4 @@ export default class Profile extends Component {
         })
     }
 }
+export default withRouter(Profile)
