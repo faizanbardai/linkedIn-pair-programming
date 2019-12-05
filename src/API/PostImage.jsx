@@ -1,20 +1,18 @@
-const baseUrl = "https://striveschool.herokuapp.com/api/posts/";
-
-const AddPost = async (text, username, password) => {
+const baseURL = "https://striveschool.herokuapp.com/api/posts/"
+const PostImage = async (img, id, username, password) => {
     const auth = btoa(username + ":" + password);
     const headers = new Headers({
         "Authorization": "Basic " + auth,
-        "Content-Type": "application/json"
+        // "Content-Type":"multipart/form-data"
     });
-    let URL = baseUrl
-
+    let URL = baseURL + id
     try {
         let response = await fetch(URL, {
-            method: "POST",
-            body: JSON.stringify(text),
+            method: "POST",            
+            body: img,
             headers
         })
-        if (response.ok) {
+        if (response) {
             return await response.json()
         }
     } catch (error) {
@@ -22,4 +20,4 @@ const AddPost = async (text, username, password) => {
     }
 }
 
-export default AddPost;
+export default PostImage;

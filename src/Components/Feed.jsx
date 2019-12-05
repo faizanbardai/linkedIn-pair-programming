@@ -6,6 +6,7 @@ import SingleFeed from './SingleFeed';
 import DeletePost from '../API/DeletePost';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
+import PostImage from '../API/PostImage';
 
 export default class Feed extends Component {
   state = {
@@ -18,13 +19,19 @@ export default class Feed extends Component {
       text: e.target.value
     })
   }
+  handleImageSelection = async (e) => {
+    let imageData = e.target.files[0];
+    const formData = new FormData();
+    formData.append('post', imageData);
+    this.setState({ formData })
+  }
   handleSubmit = async (e) => {
     e.preventDefault();
-    let { text } = this.state;
+    let { text, formData } = this.state;
     let { username, password } = this.props;
-    let newPost = await AddPost({
-      "text": text
-    }, username, password);
+    let newPost = await AddPost({ "text": text }, username, password);
+    let response = await PostImage(formData, newPost._id, username, password);
+    console.log(response);
     this.setState({
       posts: this.state.posts.concat(newPost)
     })
@@ -51,10 +58,19 @@ export default class Feed extends Component {
               as="textarea"
               rows="3"
             />
+            <div className="d-flex justify-content-between my-2">
+              <Form.Control
+                type="file"
+                accept="image/png, image/jpeg"
+                onChange={(e) => this.handleImageSelection(e)}
+              />
+              <Button className="float-right mb-2" variant="outline-primary" type="submit">
+                Submit
+            </Button>
+            </div>
           </Form.Group>
-          <Button className="mb-2" variant="outline-primary" type="submit">
-            Submit
-          </Button>
+
+
         </Form>
 
 
