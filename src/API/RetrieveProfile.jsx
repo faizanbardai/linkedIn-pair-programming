@@ -1,9 +1,4 @@
-// import authorization from './Authorization';
-// const credentials = authorization("striveLinkedIn");
-
 const baseURL = "https://strive-school-testing-apis.herokuapp.com/api/profile/";
-// const username = credentials.username;
-// const password = credentials.password;
 
 const RetrieveProfile = async (user, username, password) => {
     const auth = btoa(username + ":" + password);

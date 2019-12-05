@@ -70,9 +70,7 @@ export default class ProfileIntro extends Component {
                                     <Button
                                         variant="outline-primary"
                                         className="rounded-circle"
-                                        onClick={() =>
-                                            this.handleOpen()}
-                                    >
+                                        onClick={() => this.handleOpen()}>
                                         <FontAwesomeIcon icon={faPencilAlt} /></Button>}
                             </div>
                         </div>

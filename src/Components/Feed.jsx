@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Button, Row } from 'react-bootstrap'
+import { Form, Button, Row, Container } from 'react-bootstrap'
 import GetAllPosts from '../API/GetAllPosts'
 import AddPost from '../API/AddPost';
 import SingleFeed from './SingleFeed';
-import DeletePost from './DeletePost';
+import DeletePost from '../API/DeletePost';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 
@@ -40,7 +40,7 @@ export default class Feed extends Component {
     let { allUsers, username } = this.props;
 
     return (
-      <>
+      <Container>
         <Form onSubmit={(e) => this.handleSubmit(e)}>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Control
@@ -59,8 +59,8 @@ export default class Feed extends Component {
 
 
         {loading && <div className="d-flex justify-content-center">
-                        <Loader type="Oval" color="green" height={80} width={80} />
-                    </div>}
+          <Loader type="Oval" color="green" height={80} width={80} />
+        </div>}
 
         <Row>
           {
@@ -75,10 +75,7 @@ export default class Feed extends Component {
               />))
           }
         </Row>
-
-        
-
-      </>
+      </Container>
     )
   }
   componentDidMount = async () => {

@@ -28,9 +28,10 @@ export default class Experience extends Component {
     }
     handleSubmit = async () => {
         let { role, company, startDate, endDate, description, area, image } = this.state
+        let { username, password } = this.props;
         let response = await AddExperience(
             { role, company, startDate, endDate, description, area, image },
-            this.props.profileID);
+            username, password);
         this.props.addNewExperience(response);
         this.setState({
             role: "",
@@ -42,6 +43,9 @@ export default class Experience extends Component {
             image: ""
         })
         this.handleClose();
+    }
+    deleteExperience = (item) => {
+        this.props.deleteExperience(item)
     }
     render() {
         let { setShow } = this.state;
@@ -135,7 +139,12 @@ export default class Experience extends Component {
                             </div>}
                         </div>
                     </Card.Header>
-                    {experiences && experiences.map(experience => <SingleExperience key={experience._id} experience={experience} />)}
+                    {experiences && experiences.map(experience =>
+                        <SingleExperience
+                            key={experience._id} experience={experience}
+                            personal = {personal} deleteExperience={this.deleteExperience}
+                        />)
+                    }
                 </Card>
             </>
         )

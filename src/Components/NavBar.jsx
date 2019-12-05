@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faUserFriends, faBriefcase, faCommentAlt, faBell } from '@fortawesome/free-solid-svg-icons'
-import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faUserFriends, faBriefcase, faCommentAlt, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { Image, ListGroup } from 'react-bootstrap';
 
 export class NavBar extends Component {
-    state = {
-
-    }
+    state = {}
 
     filterUsers(e) {
         let searchKeyword = e.target.value;
@@ -38,7 +36,7 @@ export class NavBar extends Component {
         let { searchKeyword, user, filteredUsers } = this.state;
         return (
             <>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark py-0">
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark py-0 mb-2">
                     <Link className="navbar-brand" to="/">
                         <FontAwesomeIcon className="d-block mx-auto" icon={faLinkedin} />
                     </Link>
@@ -65,7 +63,7 @@ export class NavBar extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item active">
-                                <Link className="nav-link" to="/home">
+                                <Link className="nav-link" to="/">
                                     <FontAwesomeIcon className="d-block mx-auto" icon={faHome} />
                                     Home
                             <span className="sr-only">(current)</span>
@@ -108,12 +106,10 @@ export class NavBar extends Component {
                         </ul>
                     </div>
                 </nav>
-                <ListGroup
-                    id="search-autocomplete"
-                >
+                <ListGroup id="search-autocomplete">
                     {filteredUsers && filteredUsers.map(user =>
                         <Link key={user._id} to={"/profile/" + user.username}>
-                            <ListGroup.Item  action>
+                            <ListGroup.Item action>
                                 <div className="d-flex justify-content-between">
                                     {user.name} {user.surname} &nbsp;
                                     <Image

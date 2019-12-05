@@ -1,10 +1,4 @@
-// import authorization from './Authorization';
-// const credentials = authorization("striveLinkedIn");
-
 const baseURL = "https://striveschool.herokuapp.com/api/profile/"
-// const username = credentials.username;
-// const password = credentials.password;
-
 
 const GetExperience = async (user, username, password) => {
     const auth = btoa(username + ":" + password);
