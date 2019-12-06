@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import { Card, Modal, Form, Button, Row, Col } from 'react-bootstrap';
+import { Card, Modal, Form, Button, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import SingleExperience from './SingleExperience';
 import AddExperience from '../API/AddExperience';
+import AddExperienceWithImage from '../API/AddExperienceWithImage';
+import Loader from 'react-loader-spinner';
 
 export default class Experience extends Component {
     state = {
+        loading: false,
         setShow: false
     }
     handleClose() {
@@ -19,6 +22,12 @@ export default class Experience extends Component {
             setShow: true
         })
     }
+    handleImageSelection = async (e) => {
+        let imageData = e.target.files[0];
+        const formData = new FormData();
+        formData.append('experience', imageData);
+        this.setState({ formData, image: e.target.value })
+    }
     handleChange = (e) => {
         let name = e.target.name;
         let value = e.target.value;
@@ -26,13 +35,18 @@ export default class Experience extends Component {
             [name]: value
         })
     }
-    handleSubmit = async () => {
-        let { role, company, startDate, endDate, description, area, image } = this.state
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        let { role, company, startDate, endDate, description, area, formData } = this.state
         let { username, password } = this.props;
-        let response = await AddExperience(
-            { role, company, startDate, endDate, description, area, image },
+        this.handleClose();  
+        this.setState({loading: true})
+        let AddExpWithoutImage = await AddExperience(
+            { role, company, startDate, endDate, description, area },
             username, password);
-        this.props.addNewExperience(response);
+        let AddExpWithImage;
+        if (AddExpWithoutImage && formData) { AddExpWithImage = await AddExperienceWithImage(formData, AddExpWithoutImage._id, username, password); }
+        this.props.addNewExperience(formData? AddExpWithImage : AddExpWithoutImage);
         this.setState({
             role: "",
             company: "",
@@ -40,15 +54,17 @@ export default class Experience extends Component {
             endDate: "",
             description: "",
             area: "",
-            image: ""
+            image: "",
+            formData: "",
+            loading: false
         })
-        this.handleClose();
+           
     }
     deleteExperience = (item) => {
         this.props.deleteExperience(item)
     }
     render() {
-        let { setShow } = this.state;
+        let { setShow, image, loading } = this.state;
         let { experiences, personal } = this.props;
 
         return (
@@ -57,13 +73,15 @@ export default class Experience extends Component {
                     <Modal.Header closeButton>
                         <Modal.Title>Add Experience</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="LinkedInBasicProfile">
+                    <Form onSubmit={(e) => this.handleSubmit(e)}>
+                        <Form.Group>
+                            <Modal.Body>
                                 <Row>
                                     <Col sm={12} md={6}>
                                         <Form.Label>Title</Form.Label>
                                         <Form.Control
+                                            required
+                                            type="text"
                                             name="role"
                                             placeholder="Title"
                                             onChange={(e) => this.handleChange(e)}
@@ -72,6 +90,7 @@ export default class Experience extends Component {
                                     <Col sm={12} md={6}>
                                         <Form.Label>Company</Form.Label>
                                         <Form.Control
+                                            required
                                             name="company"
                                             placeholder="Company"
                                             onChange={(e) => this.handleChange(e)}
@@ -80,6 +99,7 @@ export default class Experience extends Component {
                                     <Col sm={12} md={6}>
                                         <Form.Label>Start Date</Form.Label>
                                         <Form.Control
+                                            required
                                             type="date"
                                             name="startDate"
                                             placeholder="Start Date"
@@ -98,34 +118,61 @@ export default class Experience extends Component {
                                 </Row>
                                 <Form.Label>Location</Form.Label>
                                 <Form.Control
+                                    required
                                     name="area"
                                     placeholder="Location"
                                     onChange={(e) => this.handleChange(e)}
                                 />
                                 <Form.Label>Image</Form.Label>
-                                <Form.Control
+                                {/* <Form.Control
                                     name="image"
                                     placeholder="Location"
                                     onChange={(e) => this.handleChange(e)}
-                                />
+                                /> */}
+                                <div className="d-flex justify-content-between">
+                                    <Form.Control
+                                        type="file"
+                                        value={image}
+                                        accept="image/png, image/jpeg"
+                                        onChange={(e) => this.handleImageSelection(e)}
+                                    />
+
+                                    {image &&
+                                        <OverlayTrigger
+                                            placement={"top"}
+                                            overlay={
+                                                <Tooltip id={`tooltip-${"top"}`}>
+                                                    Remove Image
+                                        </Tooltip>
+                                            }
+                                        >
+                                            <Button
+                                                onClick={() => this.setState({ formData: "", image: "" })}
+                                                className="mb-2 mr-2" variant="outline-primary">
+                                                <FontAwesomeIcon icon={faTimesCircle} />
+                                            </Button>
+                                        </OverlayTrigger>
+                                    }
+                                </div>
                                 <Form.Label>Description</Form.Label>
                                 <Form.Control
+                                    required
                                     as="textarea" rows="3"
                                     name="description"
                                     placeholder="Description"
                                     onChange={(e) => this.handleChange(e)}
                                 />
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.handleClose()}>
-                            Close
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={() => this.handleClose()}>
+                                    Close
                             </Button>
-                        <Button variant="primary" onClick={() => this.handleSubmit()}>
-                            Save Changes
+                                <Button variant="primary" type="submit">
+                                    Save Changes
                             </Button>
-                    </Modal.Footer>
+                            </Modal.Footer>
+                        </Form.Group>
+                    </Form>
                 </Modal>
                 <Card className="mb-2">
                     <Card.Header>
@@ -139,10 +186,13 @@ export default class Experience extends Component {
                             </div>}
                         </div>
                     </Card.Header>
+                    {loading && <div className="d-flex justify-content-center my-5">
+                        <Loader type="Oval" color="green" height={80} width={80} />
+                    </div>}
                     {experiences && experiences.map(experience =>
                         <SingleExperience
                             key={experience._id} experience={experience}
-                            personal = {personal} deleteExperience={this.deleteExperience}
+                            personal={personal} deleteExperience={this.deleteExperience}
                         />)
                     }
                 </Card>
