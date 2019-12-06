@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Card, Modal, Button, Form, Image, Row, Col } from 'react-bootstrap';
+import { Card, Modal, Button, Form, Image, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import UpdateProfile from '../API/UpdateProfile';
 import PostProfileImage from '../API/PostProfileImage';
 import Loader from 'react-loader-spinner';
@@ -13,7 +13,9 @@ export default class ProfileIntro extends Component {
     }
     handleClose() {
         this.setState({
-            setShow: false
+            setShow: false,
+            formData: "",
+            image: ""
         })
     }
     handleOpen = () => {
@@ -25,27 +27,31 @@ export default class ProfileIntro extends Component {
         let imageData = e.target.files[0];
         const formData = new FormData();
         formData.append('profile', imageData);
-        this.setState({ formData })
+        this.setState({ formData, image: e.target.value })
     }
-    handleSubmit = async () => {
+    handleSubmit = async (e) => {
+        e.preventDefault();
         let { name, surname, bio, title, area, formData } = this.state;
         let { username, password } = this.props;
-        this.setState({loading: true})
-        await UpdateProfile(
+        this.setState({ loading: true })
+        let profileWithoutImage = await UpdateProfile(
             {
                 name, surname, title, bio, area
             }, this.props.profile._id, username, password);
-        let profileWithImage = await PostProfileImage(formData, username, password);
-        this.props.updateProfile(profileWithImage);
+        let profileWithImage;
+        if (formData) { profileWithImage = await PostProfileImage(formData, username, password); }
+        this.props.updateProfile(formData ? profileWithImage : profileWithoutImage);
         this.setState({
             setShow: false,
             loading: false,
+            formData: "",
+            image: ""
         })
 
     }
     render() {
         let { profile, personal } = this.props;
-        let { loading, setShow, name, surname, title, bio, area } = this.state;
+        let { loading, setShow, name, surname, title, bio, area, image } = this.state;
         return (
             <>
                 <Card className="mb-2">
@@ -84,9 +90,9 @@ export default class ProfileIntro extends Component {
                     <Modal.Header closeButton>
                         <Modal.Title>Edit intro</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="LinkedInBasicProfile">
+                    <Form onSubmit={(e) => this.handleSubmit(e)}>
+                        <Form.Group controlId="LinkedInBasicProfile">
+                            <Modal.Body>
                                 <Row className="mb-2">
                                     <Col>
                                         <Form.Label>First Name</Form.Label>
@@ -142,27 +148,46 @@ export default class ProfileIntro extends Component {
                                             thumbnail>
                                         </Image> */}
                                         <Form.Label>Update Image</Form.Label>
-                                        <Form.Control
-                                            type="file"
-                                            accept="image/png, image/jpeg"
-                                            onChange={(e) => this.handleImageSelection(e)}
-                                        />
+                                        <div className="d-flex justify-content-start">
+                                            <Form.Control
+                                                value={image}
+                                                type="file"
+                                                accept="image/png, image/jpeg"
+                                                onChange={(e) => this.handleImageSelection(e)}
+                                            />
+                                            {image &&
+                                                <OverlayTrigger
+                                                    placement={"top"}
+                                                    overlay={
+                                                        <Tooltip id={`tooltip-${"top"}`}>
+                                                            Remove Image
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <Button
+                                                        onClick={() => this.setState({ formData: "", image: "" })}
+                                                        className="mb-2 mr-2" variant="outline-primary">
+                                                        <FontAwesomeIcon icon={faTimesCircle} />
+                                                    </Button>
+                                                </OverlayTrigger>
+                                            }
+                                        </div>
                                     </Col>
                                 </Row>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.handleClose()}>
-                            Close
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={() => this.handleClose()}>
+                                    Close
                             </Button>
-                        <Button variant="primary" onClick={() => this.handleSubmit()}>
-                            <div className="d-flex justify-content-around">
-                                Save Changes
+                                <Button variant="primary" type="submit">
+                                    <div className="d-flex justify-content-around">
+                                        Save Changes
                                 {loading && <Loader className="mx-2" type="Oval" color="white" height={20} width={20} />}
-                            </div>                             
-                        </Button>
-                    </Modal.Footer>
+                                    </div>
+                                </Button>
+                            </Modal.Footer>
+                        </Form.Group>
+                    </Form>
                 </Modal>
             </>
         )
@@ -175,7 +200,6 @@ export default class ProfileIntro extends Component {
             title: profile.title,
             bio: profile.bio,
             area: profile.area,
-            image: profile.image,
         })
     }
 
