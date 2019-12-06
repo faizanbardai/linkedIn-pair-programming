@@ -7,8 +7,6 @@ import { Container } from 'react-bootstrap';
 export default class App extends Component {
     state = {
         isLoggedIn: false,
-        username: "",
-        password: ""
     }
     handleLoginSuccess = (username, password, myProfile, allUsers) => {
         this.setState({
