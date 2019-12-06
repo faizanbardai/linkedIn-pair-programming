@@ -6,7 +6,9 @@ import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { Image, ListGroup } from 'react-bootstrap';
 
 export class NavBar extends Component {
-    state = {}
+    state = {
+        searchKeyword:""
+    }
 
     filterUsers(e) {
         let searchKeyword = e.target.value;
