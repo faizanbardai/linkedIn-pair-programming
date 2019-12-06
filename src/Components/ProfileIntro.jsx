@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import UpdateProfile from '../API/UpdateProfile';
 import PostProfileImage from '../API/PostProfileImage';
+import Loader from 'react-loader-spinner';
 
 export default class ProfileIntro extends Component {
     state = {
+        loading: false,
         setShow: false, // for modal
     }
     handleClose() {
@@ -28,6 +30,7 @@ export default class ProfileIntro extends Component {
     handleSubmit = async () => {
         let { name, surname, bio, title, area, formData } = this.state;
         let { username, password } = this.props;
+        this.setState({loading: true})
         await UpdateProfile(
             {
                 name, surname, title, bio, area
@@ -36,12 +39,13 @@ export default class ProfileIntro extends Component {
         this.props.updateProfile(profileWithImage);
         this.setState({
             setShow: false,
+            loading: false,
         })
 
     }
     render() {
         let { profile, personal } = this.props;
-        let { setShow, name, surname, title, bio, area } = this.state;
+        let { loading, setShow, name, surname, title, bio, area } = this.state;
         return (
             <>
                 <Card className="mb-2">
@@ -153,8 +157,11 @@ export default class ProfileIntro extends Component {
                             Close
                             </Button>
                         <Button variant="primary" onClick={() => this.handleSubmit()}>
-                            Save Changes
-                            </Button>
+                            <div class="d-flex justify-content-around">
+                                Save Changes
+                                {loading && <Loader className="mx-2" type="Oval" color="white" height={20} width={20} />}
+                            </div>                             
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </>
