@@ -90,7 +90,7 @@ export default class Feed extends Component {
                 </OverlayTrigger>
               }
               <Button className="float-right mb-2" variant="outline-primary" type="submit">
-                Submit
+                Submit {loading && <Loader className="mx-2" type="Oval" color="white" height={20} width={20} />}
             </Button>
             </div>
           </Form.Group>
