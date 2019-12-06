@@ -157,7 +157,7 @@ export default class ProfileIntro extends Component {
                             Close
                             </Button>
                         <Button variant="primary" onClick={() => this.handleSubmit()}>
-                            <div class="d-flex justify-content-around">
+                            <div className="d-flex justify-content-around">
                                 Save Changes
                                 {loading && <Loader className="mx-2" type="Oval" color="white" height={20} width={20} />}
                             </div>                             

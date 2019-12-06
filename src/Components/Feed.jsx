@@ -12,7 +12,8 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default class Feed extends Component {
   state = {
-    loading: true,
+    loadingPosts: true,
+    loadingNewPost: false,
     posts: [],
     text: "",
     image: ""
@@ -32,7 +33,7 @@ export default class Feed extends Component {
     e.preventDefault();
     let { text, formData } = this.state;
     let { username, password } = this.props;
-    this.setState({ loading: true })
+    this.setState({ loadingNewPost: true })
     let newPost = await AddPost({ "text": text }, username, password);
     let newPostWithImage;
     if (formData) { newPostWithImage = await PostImage(formData, newPost._id, username, password); }
@@ -41,7 +42,7 @@ export default class Feed extends Component {
       text: "",
       formData: "",
       image: "",
-      loading: false
+      loadingNewPost: false
     })
   }
   deletePost = async (item) => {
@@ -50,7 +51,7 @@ export default class Feed extends Component {
   }
   render() {
 
-    let { posts, text, loading, image } = this.state;
+    let { posts, text, loadingPosts, image, loadingNewPost } = this.state;
     let { allUsers, username } = this.props;
 
     return (
@@ -90,15 +91,18 @@ export default class Feed extends Component {
                 </OverlayTrigger>
               }
               <Button className="float-right mb-2" variant="outline-primary" type="submit">
-                Submit
+                <div className="d-flex justify-content-around">
+                  Submit
+                  {loadingNewPost && <Loader className="mx-2" type="Oval" color="green" height={20} width={20} />}
+                </div>
             </Button>
             </div>
           </Form.Group>
         </Form>
 
 
-        {loading && <div className="d-flex justify-content-center my-5">
-          <Loader type="Oval" color="green" height={80} width={80} />
+        {loadingPosts && <div className="d-flex justify-content-center my-5">
+          <Loader type="ThreeDots" color="blue" height={80} width={80} />
         </div>}
 
         <Row>
@@ -121,7 +125,7 @@ export default class Feed extends Component {
     let { username, password } = this.props;
     this.setState({
       posts: await GetAllPosts(username, password),
-      loading: false
+      loadingPosts: false
     })
   }
 }
