@@ -53,8 +53,11 @@ export default class Feed extends Component {
   componentDidMount = async () => {
     let { username, password } = this.props;
     this.setState({
-      posts: await GetAllPosts(username, password),
-      loadingPosts: false
+      posts: await GetAllPosts(username, password)      
     })
+    setTimeout(() => {
+      this.setState({loadingPosts: false})
+    }, 2000)
+    
   }
 }
