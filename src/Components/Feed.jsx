@@ -28,14 +28,11 @@ export default class Feed extends Component {
 
     return (
       <Container>
-        <PostForm username={username} password={password} updatePosts={this.updatePosts} />
-        
-
-
-        {loadingPosts && <div className="d-flex justify-content-center my-5">
+        <PostForm username={username} password={password} updatePosts={this.updatePosts} />      
+        {loadingPosts? <div className="d-flex justify-content-center my-5">
           <Loader type="ThreeDots" color="blue" height={80} width={80} />
-        </div>}
-
+        </div>
+        :
         <Row>
           {
             posts.slice(0).reverse().map(post => (
@@ -49,6 +46,7 @@ export default class Feed extends Component {
               />))
           }
         </Row>
+        }
       </Container>
     )
   }
