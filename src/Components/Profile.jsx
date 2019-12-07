@@ -38,7 +38,7 @@ class Profile extends Component {
             <>
                 {loading ?
                     <div className="d-flex justify-content-center">
-                        <Loader type="Oval" color="green" height={80} width={80} />
+                        <Loader type="ThreeDots" color="blue" height={80} width={80} />
                     </div>
                     :
                     <section className="container">
